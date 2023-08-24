@@ -9691,13 +9691,19 @@ async function getReleaseType() {
     return null;
 }
 async function getLatestReleaseTag() {
-    const latestRelease = await octokit.rest.repos.getLatestRelease({
+    let latestReleaseTag = null;
+    await octokit.rest.repos
+        .getLatestRelease({
         owner: context.repo.owner,
         repo: context.repo.repo,
+    })
+        .then((result) => {
+        latestReleaseTag = result.data.tag_name;
+    })
+        .catch(() => {
+        latestReleaseTag = null;
     });
-    if (latestRelease === undefined)
-        return null;
-    return latestRelease.data.tag_name;
+    return latestReleaseTag;
 }
 async function main() {
     const releaseType = await getReleaseType();

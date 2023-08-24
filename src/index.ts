@@ -34,14 +34,20 @@ async function getReleaseType(): Promise<ReleaseType | null> {
 }
 
 async function getLatestReleaseTag(): Promise<string | null> {
-  const latestRelease = await octokit.rest.repos.getLatestRelease({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-  });
+  let latestReleaseTag: string | null = null;
+  await octokit.rest.repos
+    .getLatestRelease({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+    })
+    .then((result) => {
+      latestReleaseTag = result.data.tag_name;
+    })
+    .catch(() => {
+      latestReleaseTag = null;
+    });
 
-  if (latestRelease === undefined) return null;
-
-  return latestRelease.data.tag_name;
+  return latestReleaseTag;
 }
 
 async function main() {
