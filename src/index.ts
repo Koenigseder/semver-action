@@ -4,6 +4,7 @@ import { ReleaseType } from "./types";
 
 const githubToken: string = core.getInput("github-token", { required: true });
 const baseBranch: string = core.getInput("base-branch");
+const semverStartVersion: string = core.getInput("semver-start-version");
 const majorReleaseTag: string = core.getInput("major-release-tag");
 const minorReleaseTag: string = core.getInput("minor-release-tag");
 const patchReleaseTag: string = core.getInput("patch-release-tag");
@@ -50,11 +51,19 @@ async function getLatestReleaseTag(): Promise<string | null> {
   return latestReleaseTag;
 }
 
+function getNextReleaseTag(latestReleaseTag: string | null): string {
+  if (!latestReleaseTag) return semverStartVersion;
+
+  return "";
+}
+
 async function main() {
   const releaseType: ReleaseType | null = await getReleaseType();
+  if (!releaseType) return;
+
   const latestReleaseTag: string | null = await getLatestReleaseTag();
 
-  console.log(latestReleaseTag); // Test
+  const nextReleaseTag: string = getNextReleaseTag(latestReleaseTag);
 }
 
 main();

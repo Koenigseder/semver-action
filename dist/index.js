@@ -9665,6 +9665,7 @@ const github = __importStar(__nccwpck_require__(5438));
 const types_1 = __nccwpck_require__(5077);
 const githubToken = core.getInput("github-token", { required: true });
 const baseBranch = core.getInput("base-branch");
+const semverStartVersion = core.getInput("semver-start-version");
 const majorReleaseTag = core.getInput("major-release-tag");
 const minorReleaseTag = core.getInput("minor-release-tag");
 const patchReleaseTag = core.getInput("patch-release-tag");
@@ -9705,10 +9706,17 @@ async function getLatestReleaseTag() {
     });
     return latestReleaseTag;
 }
+function getNextReleaseTag(latestReleaseTag) {
+    if (!latestReleaseTag)
+        return semverStartVersion;
+    return "";
+}
 async function main() {
     const releaseType = await getReleaseType();
+    if (!releaseType)
+        return;
     const latestReleaseTag = await getLatestReleaseTag();
-    console.log(latestReleaseTag); // Test
+    const nextReleaseTag = getNextReleaseTag(latestReleaseTag);
 }
 main();
 
