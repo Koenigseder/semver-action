@@ -51,10 +51,27 @@ async function getLatestReleaseTag(): Promise<string | null> {
   return latestReleaseTag;
 }
 
-function getNextReleaseTag(latestReleaseTag: string | null): string {
+function getNextReleaseTag(
+  releaseType: ReleaseType,
+  latestReleaseTag: string | null
+): string | null {
   if (!latestReleaseTag) return semverStartVersion;
 
-  return "new one";
+  const [major, minor, patch] = latestReleaseTag.split(".");
+
+  if (releaseType === ReleaseType.Patch) {
+    return `${major}.${minor}.${+patch + 1}`;
+  }
+
+  if (releaseType === ReleaseType.Minor) {
+    return `${major}.${+minor + 1}.${patch}`;
+  }
+
+  if (releaseType === ReleaseType.Major) {
+    return `${+major + 1}.${minor}.${patch}`;
+  }
+
+  return null;
 }
 
 async function main() {
@@ -66,7 +83,10 @@ async function main() {
 
   const latestReleaseTag: string | null = await getLatestReleaseTag();
 
-  const nextReleaseTag: string = getNextReleaseTag(latestReleaseTag);
+  const nextReleaseTag: string | null = getNextReleaseTag(
+    releaseType,
+    latestReleaseTag
+  );
 
   console.log(nextReleaseTag);
 }

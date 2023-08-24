@@ -9706,10 +9706,20 @@ async function getLatestReleaseTag() {
     });
     return latestReleaseTag;
 }
-function getNextReleaseTag(latestReleaseTag) {
+function getNextReleaseTag(releaseType, latestReleaseTag) {
     if (!latestReleaseTag)
         return semverStartVersion;
-    return "new one";
+    const [major, minor, patch] = latestReleaseTag.split(".");
+    if (releaseType === types_1.ReleaseType.Patch) {
+        return `${major}.${minor}.${+patch + 1}`;
+    }
+    if (releaseType === types_1.ReleaseType.Minor) {
+        return `${major}.${+minor + 1}.${patch}`;
+    }
+    if (releaseType === types_1.ReleaseType.Major) {
+        return `${+major + 1}.${minor}.${patch}`;
+    }
+    return null;
 }
 async function main() {
     const releaseType = await getReleaseType();
@@ -9718,7 +9728,7 @@ async function main() {
         return;
     }
     const latestReleaseTag = await getLatestReleaseTag();
-    const nextReleaseTag = getNextReleaseTag(latestReleaseTag);
+    const nextReleaseTag = getNextReleaseTag(releaseType, latestReleaseTag);
     console.log(nextReleaseTag);
 }
 main();
