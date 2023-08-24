@@ -16,7 +16,7 @@ jobs:
 
       - name: Compile TypeScript to JavaScript
         run: |
-          npm i -g @vercel/ncc && ncc build src/index.ts
+          npm install && npm run build && npm run prestart
 
       - name: Commit compiled version
         uses: stefanzweifel/git-auto-commit-action@v4
