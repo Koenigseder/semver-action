@@ -7,9 +7,21 @@ on:
 jobs:
   create-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Compile TypeScript to JavaScript
+        run: |
+          npm i -g @vercel/ncc && ncc build src/index.ts
+
+      - name: Commit compiled version
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update dist
 
       - uses: ./
         with:
