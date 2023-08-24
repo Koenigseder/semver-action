@@ -9709,7 +9709,7 @@ async function getLatestReleaseTag() {
 function getNextReleaseTag(latestReleaseTag) {
     if (!latestReleaseTag)
         return semverStartVersion;
-    return "";
+    return "none";
 }
 async function main() {
     const releaseType = await getReleaseType();
