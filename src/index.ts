@@ -17,7 +17,7 @@ async function main() {
     repo: context.repo.repo,
   });
 
-  console.log(pullRequestLabels);
+  console.log(pullRequestLabels); // Test
 }
 
 main();
