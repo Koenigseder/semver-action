@@ -9665,6 +9665,7 @@ const github = __importStar(__nccwpck_require__(5438));
 const types_1 = __nccwpck_require__(5077);
 const githubToken = core.getInput("github-token", { required: true });
 const baseBranch = core.getInput("base-branch");
+const semverPrefix = core.getInput("semver-prefix");
 const semverStartVersion = core.getInput("semver-start-version");
 const majorReleaseTag = core.getInput("major-release-tag");
 const minorReleaseTag = core.getInput("minor-release-tag");
@@ -9711,13 +9712,13 @@ function getNextReleaseTag(releaseType, latestReleaseTag) {
         return semverStartVersion;
     const [major, minor, patch] = latestReleaseTag.split(".");
     if (releaseType === types_1.ReleaseType.Patch) {
-        return `${major}.${minor}.${+patch + 1}`;
+        return `${semverPrefix}${major}.${minor}.${+patch + 1}`;
     }
     if (releaseType === types_1.ReleaseType.Minor) {
-        return `${major}.${+minor + 1}.${patch}`;
+        return `${semverPrefix}${major}.${+minor + 1}.${patch}`;
     }
     if (releaseType === types_1.ReleaseType.Major) {
-        return `${+major + 1}.${minor}.${patch}`;
+        return `${semverPrefix}${+major + 1}.${minor}.${patch}`;
     }
     return null;
 }

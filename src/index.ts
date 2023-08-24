@@ -4,6 +4,7 @@ import { ReleaseType } from "./types";
 
 const githubToken: string = core.getInput("github-token", { required: true });
 const baseBranch: string = core.getInput("base-branch");
+const semverPrefix: string = core.getInput("semver-prefix");
 const semverStartVersion: string = core.getInput("semver-start-version");
 const majorReleaseTag: string = core.getInput("major-release-tag");
 const minorReleaseTag: string = core.getInput("minor-release-tag");
@@ -60,15 +61,15 @@ function getNextReleaseTag(
   const [major, minor, patch] = latestReleaseTag.split(".");
 
   if (releaseType === ReleaseType.Patch) {
-    return `${major}.${minor}.${+patch + 1}`;
+    return `${semverPrefix}${major}.${minor}.${+patch + 1}`;
   }
 
   if (releaseType === ReleaseType.Minor) {
-    return `${major}.${+minor + 1}.${patch}`;
+    return `${semverPrefix}${major}.${+minor + 1}.${patch}`;
   }
 
   if (releaseType === ReleaseType.Major) {
-    return `${+major + 1}.${minor}.${patch}`;
+    return `${semverPrefix}${+major + 1}.${minor}.${patch}`;
   }
 
   return null;

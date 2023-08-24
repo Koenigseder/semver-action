@@ -5,27 +5,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  compile-action:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+  # compile-action:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: write
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Compile TypeScript to JavaScript
-        run: |
-          npm install && npm run prestart
+  #     - name: Compile TypeScript to JavaScript
+  #       run: |
+  #         npm install && npm run prestart
 
-      - name: Commit compiled version
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Update dist
+  #     - name: Commit compiled version
+  #       uses: stefanzweifel/git-auto-commit-action@v4
+  #       with:
+  #         commit_message: Update dist
 
   create-release:
     runs-on: ubuntu-latest
-    needs: compile-action
+    # needs: compile-action
 
     steps:
       - name: Checkout
@@ -36,3 +36,4 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           base-branch: develop
+          semver-prefix: ver

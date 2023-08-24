@@ -13,6 +13,11 @@ inputs:
     required: false
     default: "master"
 
+  semver-prefix:
+    description: A prefix like 'v' before the version number
+    required: false
+    default: ""
+
   semver-start-version:
     description: If there is no release so far, start with this
     required: false
