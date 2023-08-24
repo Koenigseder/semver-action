@@ -11,5 +11,5 @@ jobs:
 
       - uses: ./
         with:
-          github-token: ${{ github.token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           base-branch: develop
