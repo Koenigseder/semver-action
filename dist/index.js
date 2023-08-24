@@ -9662,6 +9662,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(8021));
 const github = __importStar(__nccwpck_require__(4366));
+const types_1 = __nccwpck_require__(3817);
 const githubToken = core.getInput("github-token", { required: true });
 const baseBranch = core.getInput("base-branch");
 const majorReleaseTag = core.getInput("major-release-tag");
@@ -9669,15 +9670,56 @@ const minorReleaseTag = core.getInput("minor-release-tag");
 const patchReleaseTag = core.getInput("patch-release-tag");
 const octokit = github.getOctokit(githubToken);
 const context = github.context;
-async function main() {
-    const pullRequestLabels = await octokit.rest.issues.listLabelsOnIssue({
+async function getReleaseType() {
+    const { data } = await octokit.rest.issues.listLabelsOnIssue({
         issue_number: context.issue.number,
         owner: context.repo.owner,
         repo: context.repo.repo,
     });
-    console.log(pullRequestLabels);
+    for (const label of data) {
+        const labelName = label.name;
+        if (labelName === majorReleaseTag) {
+            return types_1.ReleaseType.Major;
+        }
+        else if (labelName === minorReleaseTag) {
+            return types_1.ReleaseType.Minor;
+        }
+        else if (labelName === patchReleaseTag) {
+            return types_1.ReleaseType.Patch;
+        }
+    }
+    return null;
+}
+async function getLatestReleaseTag() {
+    const { data } = await octokit.rest.repos.getLatestRelease({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+    });
+    return data.tag_name;
+}
+async function main() {
+    const releaseType = await getReleaseType();
+    const latestReleaseTag = await getLatestReleaseTag();
+    console.log(latestReleaseTag); // Test
 }
 main();
+
+
+/***/ }),
+
+/***/ 3817:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ReleaseType = void 0;
+var ReleaseType;
+(function (ReleaseType) {
+    ReleaseType["Major"] = "major";
+    ReleaseType["Minor"] = "minor";
+    ReleaseType["Patch"] = "patch";
+})(ReleaseType || (exports.ReleaseType = ReleaseType = {}));
 
 
 /***/ }),
