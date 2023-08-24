@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  create-release:
+  compile-action:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -23,6 +23,10 @@ jobs:
         with:
           commit_message: Update dist
 
+  create-release:
+    runs-on: ubuntu-latest
+
+    steps:
       - uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
