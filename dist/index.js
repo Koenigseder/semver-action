@@ -9708,7 +9708,7 @@ async function getLatestReleaseTag() {
 }
 function getNextReleaseTag(latestReleaseTag) {
     if (!latestReleaseTag)
-        return semverStartVersion;
+        return "semverStartVersion";
     return "none";
 }
 async function main() {

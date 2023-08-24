@@ -52,7 +52,7 @@ async function getLatestReleaseTag(): Promise<string | null> {
 }
 
 function getNextReleaseTag(latestReleaseTag: string | null): string {
-  if (!latestReleaseTag) return semverStartVersion;
+  if (!latestReleaseTag) return "semverStartVersion";
 
   return "none";
 }
