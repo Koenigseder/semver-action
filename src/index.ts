@@ -46,7 +46,7 @@ async function main() {
   const releaseType: ReleaseType | null = await getReleaseType();
   const latestReleaseTag: string | null = await getLatestReleaseTag();
 
-  console.log(latestReleaseTag); // Test
+  //   console.log(latestReleaseTag); // Test
 }
 
 main();
