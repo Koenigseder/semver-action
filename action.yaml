@@ -4,38 +4,32 @@ author: Kevin Königseder
 
 inputs:
   github-token:
-    type: string
     description: GitHub token
     required: true
     default: ""
 
   base-branch:
-    type: string
     description: The base branch to create the release from
     required: false
     default: "master"
 
   major-release-tag:
-    type: string
     description: Name of the tag that is used to determine if it's a major release
     required: false
     default: "major change"
 
   minor-release-tag:
-    type: string
     description: Name of the tag that is used to determine if it's a minor release
     required: false
     default: "minor change"
 
   patch-release-tag:
-    type: string
     description: Name of the tag that is used to determine if it's a patch release
     required: false
     default: "patch change"
 
 outputs:
   new-release-tag:
-    type: string
     description: The newly created semver tag
 
 runs:
