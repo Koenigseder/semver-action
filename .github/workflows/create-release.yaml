@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: .
+      - uses: ./
         with:
           github-token: ${{ github.token }}
           base-branch: develop
