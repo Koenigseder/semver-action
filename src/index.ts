@@ -64,6 +64,8 @@ async function main() {
   const latestReleaseTag: string | null = await getLatestReleaseTag();
 
   const nextReleaseTag: string = getNextReleaseTag(latestReleaseTag);
+
+  console.log(nextReleaseTag);
 }
 
 main();

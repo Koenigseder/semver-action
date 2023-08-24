@@ -9717,6 +9717,7 @@ async function main() {
         return;
     const latestReleaseTag = await getLatestReleaseTag();
     const nextReleaseTag = getNextReleaseTag(latestReleaseTag);
+    console.log(nextReleaseTag);
 }
 main();
 
