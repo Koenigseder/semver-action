@@ -51,9 +51,7 @@ async function getLatestReleaseTag(): Promise<string | null> {
   return latestReleaseTag;
 }
 
-async function getNextReleaseTag(
-  latestReleaseTag: string | null
-): Promise<string> {
+function getNextReleaseTag(latestReleaseTag: string | null): string {
   if (!latestReleaseTag) return semverStartVersion;
 
   return "new one";
@@ -61,11 +59,14 @@ async function getNextReleaseTag(
 
 async function main() {
   const releaseType: ReleaseType | null = await getReleaseType();
-  if (!releaseType) return;
+  if (!releaseType) {
+    console.log("No label set!");
+    return;
+  }
 
   const latestReleaseTag: string | null = await getLatestReleaseTag();
 
-  const nextReleaseTag: string = await getNextReleaseTag(latestReleaseTag);
+  const nextReleaseTag: string = getNextReleaseTag(latestReleaseTag);
 
   console.log(nextReleaseTag);
 }

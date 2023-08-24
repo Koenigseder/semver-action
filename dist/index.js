@@ -9706,17 +9706,19 @@ async function getLatestReleaseTag() {
     });
     return latestReleaseTag;
 }
-async function getNextReleaseTag(latestReleaseTag) {
+function getNextReleaseTag(latestReleaseTag) {
     if (!latestReleaseTag)
         return semverStartVersion;
     return "new one";
 }
 async function main() {
     const releaseType = await getReleaseType();
-    if (!releaseType)
+    if (!releaseType) {
+        console.log("No label set!");
         return;
+    }
     const latestReleaseTag = await getLatestReleaseTag();
-    const nextReleaseTag = await getNextReleaseTag(latestReleaseTag);
+    const nextReleaseTag = getNextReleaseTag(latestReleaseTag);
     console.log(nextReleaseTag);
 }
 main();
