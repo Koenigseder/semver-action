@@ -60,4 +60,4 @@ jobs:
           MINOR_RELEASE_TAG: ${{ steps.create-release.outputs.minor-release-tag }}
           PATCH_RELEASE_TAG: ${{ steps.create-release.outputs.patch-release-tag }}
         run: |
-          printf "### :x: No new release was created for this PR\n\nIn order to create a release set a valid label:\n\n- Major release: "$MAJOR_RELEASE_TAG"\n- Minor release: %s\n- Patch release: %s" "$MINOR_RELEASE_TAG" "$PATCH_RELEASE_TAG" >> "$GITHUB_STEP_SUMMARY"
+          echo "### :x: No new release was created for this PR\n\nIn order to create a release set a valid label:\n\n- Major release: '$MAJOR_RELEASE_TAG'\n- Minor release: '$MINOR_RELEASE_TAG'\n- Patch release: '$PATCH_RELEASE_TAG'" >> "$GITHUB_STEP_SUMMARY"
