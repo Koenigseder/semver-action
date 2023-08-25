@@ -91,7 +91,6 @@ async function main() {
   core.setOutput("major-release-tag", majorReleaseTag);
   core.setOutput("minor-release-tag", minorReleaseTag);
   core.setOutput("patch-release-tag", patchReleaseTag);
-  core.setOutput("new-release-tag", null);
 
   const releaseType: ReleaseType | null = await getReleaseType();
   if (!releaseType) {

@@ -47,14 +47,14 @@ jobs:
           echo $TAG
 
       - name: Output result (new release)
-        if: ${{ steps.create-release.outputs.new-release-tag != 'none' }}
+        if: ${{ steps.create-release.outputs.new-release-tag != '' }}
         env:
           NEW_RELEASE_TAG: ${{ steps.create-release.outputs.new-release-tag }}
         run: |
           printf "### :heavy_check_mark: Created new release for this PR\n\nNew release: %s" "$NEW_RELEASE_TAG" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Output result (no new release)
-        if: ${{ steps.create-release.outputs.new-release-tag == 'none' }}
+        if: ${{ steps.create-release.outputs.new-release-tag == '' }}
         env:
           MAJOR_RELEASE_TAG: ${{ steps.create-release.outputs.major-release-tag }}
           MINOR_RELEASE_TAG: ${{ steps.create-release.outputs.minor-release-tag }}
