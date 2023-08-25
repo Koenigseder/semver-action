@@ -84,7 +84,6 @@ async function createNewTagAndRelease(newTag: string) {
     tag_name: newTag,
     target_commitish: baseBranch,
     name: newTag,
-    body: context.payload.pull_request?.body,
   });
 }
 
@@ -102,7 +101,12 @@ async function main() {
     latestReleaseTag
   );
 
-  console.log(context.payload.pull_request?.body);
+  if (!nextReleaseTag) {
+    console.log("Cannot compute new release tag!");
+    return;
+  }
+
+  createNewTagAndRelease(nextReleaseTag);
 
   core.setOutput("new-release-tag", nextReleaseTag);
 }

@@ -9725,18 +9725,15 @@ function getNextReleaseTag(releaseType, latestReleaseTag) {
     return null;
 }
 async function createNewTagAndRelease(newTag) {
-    var _a;
     await octokit.rest.repos.createRelease({
         owner: context.repo.owner,
         repo: context.repo.repo,
         tag_name: newTag,
         target_commitish: baseBranch,
         name: newTag,
-        body: (_a = context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body,
     });
 }
 async function main() {
-    var _a;
     const releaseType = await getReleaseType();
     if (!releaseType) {
         console.log("No label set!");
@@ -9744,7 +9741,11 @@ async function main() {
     }
     const latestReleaseTag = await getLatestReleaseTag();
     const nextReleaseTag = getNextReleaseTag(releaseType, latestReleaseTag);
-    console.log((_a = context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body);
+    if (!nextReleaseTag) {
+        console.log("Cannot compute new release tag!");
+        return;
+    }
+    createNewTagAndRelease(nextReleaseTag);
     core.setOutput("new-release-tag", nextReleaseTag);
 }
 main();
