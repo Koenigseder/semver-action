@@ -9734,6 +9734,10 @@ async function createNewTagAndRelease(newTag) {
     });
 }
 async function main() {
+    core.setOutput("major-release-tag", majorReleaseTag);
+    core.setOutput("minor-release-tag", minorReleaseTag);
+    core.setOutput("patch-release-tag", patchReleaseTag);
+    core.setOutput("new-release-tag", null);
     const releaseType = await getReleaseType();
     if (!releaseType) {
         console.log("No valid label set!");
@@ -9745,7 +9749,7 @@ async function main() {
         console.log("Cannot compute new release tag!");
         return;
     }
-    createNewTagAndRelease(nextReleaseTag);
+    await createNewTagAndRelease(nextReleaseTag);
     core.setOutput("new-release-tag", nextReleaseTag);
 }
 main();
