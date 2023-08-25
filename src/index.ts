@@ -77,6 +77,17 @@ function getNextReleaseTag(
   return null;
 }
 
+async function createNewTagAndRelease(newTag: string) {
+  await octokit.rest.repos.createRelease({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    tag_name: newTag,
+    target_commitish: baseBranch,
+    name: newTag,
+    body: context.payload.pull_request?.body,
+  });
+}
+
 async function main() {
   const releaseType: ReleaseType | null = await getReleaseType();
   if (!releaseType) {
@@ -91,7 +102,9 @@ async function main() {
     latestReleaseTag
   );
 
-  console.log(nextReleaseTag);
+  console.log(context.payload.pull_request?.body);
+
+  core.setOutput("new-release-tag", nextReleaseTag);
 }
 
 main();
