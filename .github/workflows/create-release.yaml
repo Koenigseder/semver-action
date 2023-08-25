@@ -44,7 +44,7 @@ jobs:
         env:
           TAG: ${{ steps.create-release.outputs.new-release-tag }}
         run: |
-          console.log($TAG)
+          echo $TAG
 
       - name: Output result (new release)
         if: ${{ steps.create-release.outputs.new-release-tag != 'none' }}
