@@ -9736,7 +9736,7 @@ async function createNewTagAndRelease(newTag) {
 async function main() {
     const releaseType = await getReleaseType();
     if (!releaseType) {
-        console.log("No label set!");
+        console.log("No valid label set!");
         return;
     }
     const latestReleaseTag = await getLatestReleaseTag();

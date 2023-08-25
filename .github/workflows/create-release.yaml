@@ -32,8 +32,25 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create release
+        id: create-release
         uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           base-branch: develop
           semver-prefix: v
+
+      - name: Output result (new release)
+        if: ${{ steps.create-release.outputs.new-release-tag != 'null' }}
+        env:
+          NEW_RELEASE_TAG: ${{ steps.create-release.outputs.new-release-tag }}
+        run: |
+          printf "### :heavy_check_mark: Created new release for this PR\n\nNew release: %s" "$NEW_RELEASE_TAG" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Output result (no new release)
+        if: ${{ steps.create-release.outputs.new-release-tag == 'null' }}
+        env:
+          MAJOR_RELEASE_TAG: ${{ steps.create-release.outputs.major-release-tag }}
+          MINOR_RELEASE_TAG: ${{ steps.create-release.outputs.minor-release-tag }}
+          PATCH_RELEASE_TAG: ${{ steps.create-release.outputs.patch-release-tag }}
+        run: |
+          printf "### :x: No new release was created for this PR\n\nIn order to create a release set a valid label:\n\n- Major release: `%s`\n- Minor release: `%s`\n-Patch release: `%s` "$MAJOR_RELEASE_TAG" "$MINOR_RELEASE_TAG" "$PATCH_RELEASE_TAG" >> "$GITHUB_STEP_SUMMARY"

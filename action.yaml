@@ -42,6 +42,15 @@ outputs:
   new-release-tag:
     description: The newly created semver tag
 
+  major-release-tag:
+    description: Name of the tag that is used to determine if it's a major release
+
+  minor-release-tag:
+    description: Name of the tag that is used to determine if it's a minor release
+
+  patch-release-tag:
+    description: Name of the tag that is used to determine if it's a patch release
+
 runs:
   using: node16
   main: dist/index.js

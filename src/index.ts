@@ -88,9 +88,13 @@ async function createNewTagAndRelease(newTag: string) {
 }
 
 async function main() {
+  core.setOutput("major-release-tag", majorReleaseTag);
+  core.setOutput("minor-release-tag", minorReleaseTag);
+  core.setOutput("patch-release-tag", patchReleaseTag);
+
   const releaseType: ReleaseType | null = await getReleaseType();
   if (!releaseType) {
-    console.log("No label set!");
+    console.log("No valid label set!");
     return;
   }
 
