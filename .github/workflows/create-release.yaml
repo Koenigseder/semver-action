@@ -40,6 +40,12 @@ jobs:
           base-branch: develop
           semver-prefix: v
 
+      - name: print
+        env:
+          TAG: ${{ steps.create-release.outputs.new-release-tag }}
+        run: |
+          console.log($TAG)
+
       - name: Output result (new release)
         if: ${{ steps.create-release.outputs.new-release-tag != 'none' }}
         env:
