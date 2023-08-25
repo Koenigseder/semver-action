@@ -13,6 +13,16 @@ inputs:
     required: false
     default: "master"
 
+  semver-prefix:
+    description: A prefix like 'v' before the version number
+    required: false
+    default: ""
+
+  semver-start-version:
+    description: If there is no release so far, start with this
+    required: false
+    default: "1.0.0"
+
   major-release-tag:
     description: Name of the tag that is used to determine if it's a major release
     required: false
@@ -31,6 +41,15 @@ inputs:
 outputs:
   new-release-tag:
     description: The newly created semver tag
+
+  major-release-tag:
+    description: Name of the tag that is used to determine if it's a major release
+
+  minor-release-tag:
+    description: Name of the tag that is used to determine if it's a minor release
+
+  patch-release-tag:
+    description: Name of the tag that is used to determine if it's a patch release
 
 runs:
   using: node16
