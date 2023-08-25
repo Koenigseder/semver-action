@@ -45,7 +45,7 @@ jobs:
         env:
           NEW_RELEASE_TAG: ${{ steps.create-release.outputs.new-release-tag }}
         run: |
-          echo "### :heavy_check_mark: Created new release for this PR\n\nNew release: $NEW_RELEASE_TAG" >> "$GITHUB_STEP_SUMMARY"
+          printf "### :heavy_check_mark: Created new release for this PR\n\nNew release: %s" >> "$NEW_RELEASE_TAG" "$GITHUB_STEP_SUMMARY"
 
       - name: Output result (no new release)
         if: ${{ steps.create-release.outputs.new-release-tag == '' }}
@@ -54,4 +54,4 @@ jobs:
           MINOR_RELEASE_TAG: ${{ steps.create-release.outputs.minor-release-tag }}
           PATCH_RELEASE_TAG: ${{ steps.create-release.outputs.patch-release-tag }}
         run: |
-          echo "### :x: No new release was created for this PR\n\nIn order to create a release set a valid label:\n\n- Major release: `$MAJOR_RELEASE_TAG`\n- Minor release: `$MINOR_RELEASE_TAG`\n-Patch release: `$PATCH_RELEASE_TAG`" >> "$GITHUB_STEP_SUMMARY"
+          printf "### :x: No new release was created for this PR\n\nIn order to create a release set a valid label:\n\n- Major release: `%s`\n- Minor release: `%s`\n-Patch release: `%s`" "$MAJOR_RELEASE_TAG" "$MINOR_RELEASE_TAG" "$PATCH_RELEASE_TAG" >> "$GITHUB_STEP_SUMMARY"
