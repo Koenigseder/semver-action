@@ -56,20 +56,22 @@ function getNextReleaseTag(
   releaseType: ReleaseType,
   latestReleaseTag: string | null
 ): string | null {
-  if (!latestReleaseTag) return semverStartVersion;
+  if (!latestReleaseTag) return `${semverPrefix}${semverStartVersion}`;
 
-  const [major, minor, patch] = latestReleaseTag.split(".");
+  const [major, minor, patch] = latestReleaseTag
+    .replace(semverPrefix, "")
+    .split(".");
 
   if (releaseType === ReleaseType.Patch) {
     return `${semverPrefix}${major}.${minor}.${+patch + 1}`;
   }
 
   if (releaseType === ReleaseType.Minor) {
-    return `${semverPrefix}${major}.${+minor + 1}.${patch}`;
+    return `${semverPrefix}${major}.${+minor + 1}.0`;
   }
 
   if (releaseType === ReleaseType.Major) {
-    return `${semverPrefix}${+major + 1}.${minor}.${patch}`;
+    return `${semverPrefix}${+major + 1}.0.0`;
   }
 
   return null;

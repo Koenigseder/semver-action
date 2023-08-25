@@ -9709,16 +9709,18 @@ async function getLatestReleaseTag() {
 }
 function getNextReleaseTag(releaseType, latestReleaseTag) {
     if (!latestReleaseTag)
-        return semverStartVersion;
-    const [major, minor, patch] = latestReleaseTag.split(".");
+        return `${semverPrefix}${semverStartVersion}`;
+    const [major, minor, patch] = latestReleaseTag
+        .replace(semverPrefix, "")
+        .split(".");
     if (releaseType === types_1.ReleaseType.Patch) {
         return `${semverPrefix}${major}.${minor}.${+patch + 1}`;
     }
     if (releaseType === types_1.ReleaseType.Minor) {
-        return `${semverPrefix}${major}.${+minor + 1}.${patch}`;
+        return `${semverPrefix}${major}.${+minor + 1}.0`;
     }
     if (releaseType === types_1.ReleaseType.Major) {
-        return `${semverPrefix}${+major + 1}.${minor}.${patch}`;
+        return `${semverPrefix}${+major + 1}.0.0`;
     }
     return null;
 }
