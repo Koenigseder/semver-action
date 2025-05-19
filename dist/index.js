@@ -29241,6 +29241,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const types_1 = __nccwpck_require__(5077);
 const githubToken = core.getInput("github-token", { required: true });
+const releaseBody = core.getInput("release-body");
 const baseBranch = core.getInput("base-branch");
 const semverPrefix = core.getInput("semver-prefix");
 const semverStartVersion = core.getInput("semver-start-version");
@@ -29308,6 +29309,7 @@ async function createNewTagAndRelease(newTag) {
         tag_name: newTag,
         target_commitish: baseBranch,
         name: newTag,
+        body: releaseBody,
     });
 }
 async function main() {
