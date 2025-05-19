@@ -11,6 +11,10 @@ inputs:
     required: true
     default: ""
 
+  release-body:
+    description: The release's body
+    required: false
+
   base-branch:
     description: The base branch to create the release from
     required: false
